@@ -103,7 +103,7 @@ lanes...) is injected into a copy of the RTL, and the suite must fail.
 | Load-use check ignores rs2 | 1 / 41 | 23 / 40 |
 | *...10 more, all caught* | | |
 
-Three of these bugs pass the official compliance tests; the random co-simulation
+Two of these bugs pass the official compliance tests completely; the random co-simulation
 catches all of them. Details, including how the first version of the generator
 missed two bugs and was improved: [`docs/VERIFICATION.md`](docs/VERIFICATION.md)
 and [`results/mutation.md`](results/mutation.md).
