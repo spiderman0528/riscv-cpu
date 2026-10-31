@@ -1,0 +1,4 @@
+`verilator_config
+// Unused address bits / instruction fields are expected in this design.
+lint_off -rule UNUSEDSIGNAL
+lint_off -rule UNUSEDPARAM

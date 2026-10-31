@@ -1,0 +1,12 @@
+rtl/riscv_pkg.sv
+rtl/alu.sv
+rtl/regfile.sv
+rtl/imm_gen.sv
+rtl/decoder.sv
+rtl/branch_predictor.sv
+rtl/hazard_unit.sv
+rtl/forwarding_unit.sv
+rtl/core.sv
+rtl/ram_dp.sv
+rtl/uart_tx.sv
+rtl/soc.sv
