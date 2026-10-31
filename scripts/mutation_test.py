@@ -46,7 +46,7 @@ MUTANTS = [
      "rtl/core.sv", "else if (stall_d)      pc_next = pc_f;",
      "else if (stall_d)      pc_next = pc_f + 32'd4;"),
     ("Misprediction check ignores the predicted target",
-     "rtl/core.sv", "assign mispredict_e  = e_valid && (e_actual_next != e_pred_next);",
+     "rtl/core.sv", "assign mispredict_e  = e_valid && (e_taken ? !(e_pred_taken && e_tgt_ok) : e_pred_taken);",
      "assign mispredict_e  = e_valid && (e_taken != e_pred_taken);"),
     ("BLT uses an unsigned comparison",
      "rtl/core.sv", "br_cond = ($signed(e_op1) <  $signed(e_op2));",

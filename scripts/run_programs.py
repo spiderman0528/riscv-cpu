@@ -12,7 +12,8 @@ def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--sim", required=True)
     a = ap.parse_args()
-    progs = sorted((ROOT / "sw" / "build").glob("*.hex"))
+    # firmware.hex is the never-ending board demo; it is not a self-checking test
+    progs = sorted(p for p in (ROOT / "sw" / "build").glob("*.hex") if p.stem != "firmware")
     failed = 0
     for hexf in progs:
         r = subprocess.run([a.sim, f"+hex={hexf}"], capture_output=True, text=True)

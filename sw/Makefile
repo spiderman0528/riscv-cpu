@@ -21,6 +21,13 @@ build/%.elf: examples/%.c $(COMMON) common/runtime.h common/link.ld | build
 build/%.elf: bench/%.c $(COMMON) common/runtime.h common/link.ld | build
 	$(RVCC) $(CFLAGS) $(LDFLAGS) -o $@ $(COMMON) $<
 
+build/%.elf: fpga/%.c $(COMMON) common/runtime.h common/link.ld | build
+	$(RVCC) $(CFLAGS) $(LDFLAGS) -o $@ $(COMMON) $<
+
+# Board image, copied next to the Quartus project as fpga/firmware.hex
+fpga: build/firmware.hex
+	cp build/firmware.hex ../fpga/firmware.hex
+
 build/%.hex: build/%.elf
 	$(OBJCOPY) -O binary $< build/$*.bin
 	python3 ../scripts/elf2hex.py build/$*.bin $@
@@ -32,5 +39,5 @@ build:
 clean:
 	rm -rf build
 
-.PHONY: all clean
+.PHONY: all clean fpga
 .SECONDARY:

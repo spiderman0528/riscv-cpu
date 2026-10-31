@@ -168,7 +168,19 @@ module core
     .rdata2 (d_rs2_val)
   );
 
+  // Branch-target work that does not depend on register values is done in ID,
+  // so the EX stage only has to evaluate the branch condition (timing).
+  logic [31:0] d_br_target, d_jalr_k, d_jalr_k1;
+  logic        d_tgt_match;
+  assign d_br_target = d_pc + d_imm;                    // BRANCH / JAL target
+  assign d_tgt_match = (d_pred_target == d_br_target);
+  // JALR: (rs1 + imm) & ~1 == pred_target  <=>  rs1 == pred_target - imm (+1)
+  assign d_jalr_k    = d_pred_target - d_imm;
+  assign d_jalr_k1   = d_jalr_k + 32'd1;
+
   // ---------------- ID/EX ----------------
+  logic        e_tgt_match;
+  logic [31:0] e_br_target, e_jalr_k, e_jalr_k1, e_pc4;
   logic        e_valid, e_reg_we, e_b_imm, e_mem_read, e_mem_write;
   logic        e_is_branch, e_is_jal, e_is_jalr, e_is_fence_i, e_illegal;
   logic        e_pred_taken;
@@ -209,6 +221,11 @@ module core
       e_illegal     <= d_illegal;
       e_pred_taken  <= d_pred_taken;
       e_pred_target <= d_pred_target;
+      e_br_target   <= d_br_target;
+      e_tgt_match   <= d_tgt_match;
+      e_jalr_k      <= d_jalr_k;
+      e_jalr_k1     <= d_jalr_k1;
+      e_pc4         <= d_pc + 32'd4;
     end
   end
 
@@ -254,7 +271,7 @@ module core
 
   // ---------------- branch resolution ----------------
   logic        br_cond, e_taken, e_ctrl;
-  logic [31:0] e_target, e_pc4, e_actual_next, e_pred_next;
+  logic [31:0] e_target, e_actual_next;
 
   always_comb begin
     case (e_funct3)
@@ -268,15 +285,22 @@ module core
     endcase
   end
 
-  assign e_pc4         = e_pc + 32'd4;
   assign e_ctrl        = e_is_branch || e_is_jal || e_is_jalr;
   assign e_taken       = e_is_jal || e_is_jalr || (e_is_branch && br_cond);
-  assign e_target      = e_is_jalr ? {alu_y[31:1], 1'b0} : (e_pc + e_imm);
+  assign e_target      = e_is_jalr ? {alu_y[31:1], 1'b0} : e_br_target;
   assign e_actual_next = e_taken ? e_target : e_pc4;
-  assign e_pred_next   = e_pred_taken ? e_pred_target : e_pc4;
 
-  logic mispredict_e;
-  assign mispredict_e  = e_valid && (e_actual_next != e_pred_next);
+  // Misprediction: wrong direction, or taken with the wrong target. The target
+  // comparisons were prepared in ID, so only the branch condition (and, for
+  // JALR, an equality test on rs1) sits on the EX critical path.
+  logic e_tgt_ok, mispredict_e;
+  always_comb begin
+    if (e_is_jalr)
+      e_tgt_ok = (e_op1 == e_jalr_k) || (e_op1 == e_jalr_k1);
+    else
+      e_tgt_ok = e_tgt_match;
+  end
+  assign mispredict_e  = e_valid && (e_taken ? !(e_pred_taken && e_tgt_ok) : e_pred_taken);
   assign redirect_e    = mispredict_e || (e_valid && e_is_fence_i);
   assign redirect_pc_e = e_actual_next;   // pc+4 for FENCE.I
 
