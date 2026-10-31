@@ -1,6 +1,8 @@
 # Unit tests: cocotb + Icarus Verilog (pip install cocotb pytest)
+PYTHON ?= python3
+
 test:
-	python3 -m pytest -q test_units.py
+	$(PYTHON) -m pytest -q test_units.py
 
 clean:
 	rm -rf sim_build results.xml __pycache__ .pytest_cache
