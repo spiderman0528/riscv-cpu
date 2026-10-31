@@ -1,0 +1,150 @@
+{
+  "baseline": {
+    "sort": {
+      "cycles": 244227,
+      "instret": 132817,
+      "mispredicts": 21685,
+      "stall_cycles": 68038,
+      "cpi": 1.838823343397306
+    },
+    "matmul": {
+      "cycles": 552023,
+      "instret": 247603,
+      "mispredicts": 34595,
+      "stall_cycles": 235230,
+      "cpi": 2.229468140531415
+    },
+    "crc32": {
+      "cycles": 188451,
+      "instret": 79893,
+      "mispredicts": 2047,
+      "stall_cycles": 104464,
+      "cpi": 2.3587923848146897
+    },
+    "fib": {
+      "cycles": 138581,
+      "instret": 94568,
+      "mispredicts": 11555,
+      "stall_cycles": 20906,
+      "cpi": 1.4654111327298875
+    },
+    "sieve": {
+      "cycles": 298616,
+      "instret": 138618,
+      "mispredicts": 26317,
+      "stall_cycles": 107365,
+      "cpi": 2.1542368235005553
+    }
+  },
+  "fwd": {
+    "sort": {
+      "cycles": 197870,
+      "instret": 132817,
+      "mispredicts": 21685,
+      "stall_cycles": 21683,
+      "cpi": 1.489794228148505
+    },
+    "matmul": {
+      "cycles": 316901,
+      "instret": 247603,
+      "mispredicts": 34595,
+      "stall_cycles": 108,
+      "cpi": 1.279875445774082
+    },
+    "crc32": {
+      "cycles": 86035,
+      "instret": 79893,
+      "mispredicts": 2047,
+      "stall_cycles": 2048,
+      "cpi": 1.07687782408972
+    },
+    "fib": {
+      "cycles": 117677,
+      "instret": 94568,
+      "mispredicts": 11555,
+      "stall_cycles": 0,
+      "cpi": 1.2443638440064293
+    },
+    "sieve": {
+      "cycles": 199441,
+      "instret": 138618,
+      "mispredicts": 26317,
+      "stall_cycles": 8190,
+      "cpi": 1.4387813992410798
+    }
+  },
+  "bp": {
+    "sort": {
+      "cycles": 201473,
+      "instret": 132817,
+      "mispredicts": 307,
+      "stall_cycles": 68040,
+      "cpi": 1.516921779591468
+    },
+    "matmul": {
+      "cycles": 489897,
+      "instret": 247603,
+      "mispredicts": 3532,
+      "stall_cycles": 235230,
+      "cpi": 1.9785584181128661
+    },
+    "crc32": {
+      "cycles": 184361,
+      "instret": 79894,
+      "mispredicts": 2,
+      "stall_cycles": 104464,
+      "cpi": 2.3075700302901345
+    },
+    "fib": {
+      "cycles": 123842,
+      "instret": 94568,
+      "mispredicts": 4184,
+      "stall_cycles": 20909,
+      "cpi": 1.3095550291853482
+    },
+    "sieve": {
+      "cycles": 248848,
+      "instret": 138618,
+      "mispredicts": 1433,
+      "stall_cycles": 107365,
+      "cpi": 1.7952069716775598
+    }
+  },
+  "final": {
+    "sort": {
+      "cycles": 155114,
+      "instret": 132817,
+      "mispredicts": 307,
+      "stall_cycles": 21683,
+      "cpi": 1.1678776060293488
+    },
+    "matmul": {
+      "cycles": 254775,
+      "instret": 247603,
+      "mispredicts": 3532,
+      "stall_cycles": 108,
+      "cpi": 1.028965723355533
+    },
+    "crc32": {
+      "cycles": 81945,
+      "instret": 79894,
+      "mispredicts": 2,
+      "stall_cycles": 2048,
+      "cpi": 1.0256715147570532
+    },
+    "fib": {
+      "cycles": 102935,
+      "instret": 94568,
+      "mispredicts": 4184,
+      "stall_cycles": 0,
+      "cpi": 1.0884760172574233
+    },
+    "sieve": {
+      "cycles": 149673,
+      "instret": 138618,
+      "mispredicts": 1433,
+      "stall_cycles": 8190,
+      "cpi": 1.0797515474180843
+    }
+  }
+}
